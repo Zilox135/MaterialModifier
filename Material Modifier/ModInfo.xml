@@ -1,0 +1,8 @@
+<xml>	
+	<Name value="Material_Modifier" />
+	<DisplayName value="Material Modifier" />
+	<Description value="Allows entity materials to be tinted and replaced." />
+	<Author value="Zilox" />
+	<Version value="1.0.0" />
+	<Website value="" />	
+</xml>
