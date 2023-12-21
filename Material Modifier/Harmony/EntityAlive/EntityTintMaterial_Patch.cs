@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Harmony.EntityAlive
 {
-    [HarmonyPatch(typeof(global::EntityAlive), nameof(global::EntityAlive.PostInit))]
+    [HarmonyPatch(typeof(global::EntityAlive), nameof(global::EntityAlive.Init))]
     public class EntityTintMaterial_Patch
     {
         public static readonly string PropTintColor = "TintColor";
