@@ -5,51 +5,51 @@ using UnityEngine.Scripting;
 [Preserve]
 public class MinEventActionReplaceMaterial : MinEventActionTargetedBase
 {
-    private string _targetMaterialName = string.Empty;
-    private string _replaceMaterialPath = string.Empty;
+    private string targetMaterialName = string.Empty;
+    private string replaceMaterialPath = string.Empty;
 
-    private Renderer[] _renderers;
-    private Material[] _materials;
+    private Renderer[] renderers;
+    private Material[] materials;
 
     public override void Execute(MinEventParams _params)
     {
-        _renderers = _params.Self?.RootTransform?.GetComponentsInChildren<Renderer>();
+        renderers = _params.Self?.RootTransform?.GetComponentsInChildren<Renderer>();
 
-        if (_renderers == null || _renderers.Length == 0)
+        if (renderers == null || renderers.Length == 0)
         {
             return;
         }
 
-        foreach (Renderer renderer in _renderers)
+        foreach (Renderer renderer in renderers)
         {
             for (int i = 0; i < renderer.materials.Length; i++)
             {
-                _materials = renderer.materials;
+                materials = renderer.materials;
                 
-                if (_materials[i] == null || string.IsNullOrEmpty(_materials[i].name))
+                if (materials[i] == null || string.IsNullOrEmpty(materials[i].name))
                 {
                     continue;
                 }
 
-                string currentMaterialName = _materials[i].name;
+                string currentMaterialName = materials[i].name;
 
-                if (_materials[i].name.EndsWith("(Instance)"))
+                if (materials[i].name.EndsWith("(Instance)"))
                 {
-                    currentMaterialName = _materials[i].name.Replace("(Instance)", string.Empty).Trim();
+                    currentMaterialName = materials[i].name.Replace("(Instance)", string.Empty).Trim();
                 }
 
-                if (currentMaterialName == _targetMaterialName)
+                if (currentMaterialName == targetMaterialName)
                 {
-                    Material replaceMaterial = DataLoader.LoadAsset<Material>(_replaceMaterialPath);
+                    Material replaceMaterial = DataLoader.LoadAsset<Material>(replaceMaterialPath);
 
                     if (replaceMaterial == null)
                     {
-                        Log.Warning($"Failed to replace target material '{_targetMaterialName}' with '{_replaceMaterialPath}' because it could not be loaded!");
+                        Log.Warning($"Failed to replace target material '{targetMaterialName}' with '{replaceMaterialPath}' because it could not be loaded!");
                         return;
                     }
 
-                    _materials[i] = replaceMaterial;
-                    renderer.materials = _materials;
+                    materials[i] = replaceMaterial;
+                    renderer.materials = materials;
                 }
             }
         }
@@ -68,14 +68,14 @@ public class MinEventActionReplaceMaterial : MinEventActionTargetedBase
             string localName = _attribute.Name.LocalName;
             if (localName == "target_material_name")
             {
-                _targetMaterialName = _attribute.Value;
+                targetMaterialName = _attribute.Value;
                 return true;
             }
 
             if (localName == "replace_material")
             {
-                _replaceMaterialPath = _attribute.Value;
-                DataLoader.PreloadBundle(_replaceMaterialPath);
+                replaceMaterialPath = _attribute.Value;
+                DataLoader.PreloadBundle(replaceMaterialPath);
             }
         }
         return flag;
