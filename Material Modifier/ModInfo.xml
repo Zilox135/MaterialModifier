@@ -3,6 +3,6 @@
 	<DisplayName value="Material Modifier" />
 	<Description value="Allows entity materials to be tinted and replaced." />
 	<Author value="Zilox" />
-	<Version value="1.0.3" />
+	<Version value="1.0.4" />
 	<Website value="https://github.com/Zilox135/MaterialModifier" />	
 </xml>
